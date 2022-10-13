@@ -23,6 +23,7 @@ def login():
 
 def register():
     newName = str(input("Name :\t"))
+    assert not db.collection(myDocument).document(newName).get().exists, "There is no such a file"
     newPassword = str(input("Password :\t"))
     myDocument.document(newName).set({
         "password": newPassword
