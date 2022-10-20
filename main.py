@@ -1,5 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+
 #firebase connection
 db = credentials.Certificate("./sign-up-sign-in-python-firebase-adminsdk-8kbfq-e0afe42a03.json")
 app = firebase_admin.initialize_app(db)
