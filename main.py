@@ -50,5 +50,5 @@ If yes press l else if press r. :\t"""))
         else:
             print("""You pressed an incorrect character.
 Please try again""")
-         
+
 main()
