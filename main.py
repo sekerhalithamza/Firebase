@@ -13,18 +13,24 @@ my_document = db.collection("users")
 #login function
 def login():
     my_name = str(input("Name :\t"))
-    my_password = str(input("Password :\t"))
-    hashed_my_password = hashlib.sha256(my_password.encode()).hexdigest()
-    try:
-        data = my_document.document(my_name).get().to_dict()
-        data["password"]
-    except KeyError:
-        print('Account not found')
-    except AttributeError:
-        print("Account not found")
-    else: 
-        if data["password"] == hashed_my_password:
-            print("Giriş başarılı")
+    yn = str(input("Did you forget your password? (y/n):\t"))
+    if yn == "y":
+        change_password()
+    elif yn == "n":
+        my_password = str(input("Password :\t"))
+        hashed_my_password = hashlib.sha256(my_password.encode()).hexdigest()
+        try:
+            data = my_document.document(my_name).get().to_dict()
+            data["password"]
+        except KeyError:
+            print('Account not found')
+        except AttributeError:
+            print("Account not found")
+        else: 
+            if data["password"] == hashed_my_password:
+                print("Giriş başarılı")
+    else:
+        print("Wrong character please try again.")
 
 #register function
 def register():
