@@ -17,7 +17,7 @@ def login():
     hashed_my_password = hashlib.sha256(my_password.encode()).hexdigest()
     try:
         data = my_document.document(my_name).get().to_dict()
-        data["password"] 
+        data["password"]
     except KeyError:
         print('Account not found')
     except AttributeError:
@@ -29,7 +29,7 @@ def login():
 #register function
 def register():
     new_name = str(input("Name :\t"))
-    assert not my_document.document(new_name).get().exists, "There is no such a file"
+    assert not my_document.document(new_name).get().exists, "This username is already taken, please choose another one."
     new_password = str(input("Password :\t"))
     hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
     my_document.document(new_name).set({
