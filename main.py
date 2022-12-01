@@ -36,6 +36,16 @@ def register():
         "password": hashed_password
     })
 
+#change password function
+def change_password():
+    my_name = str(input("Name :\t"))
+    assert my_document.document(my_name).get().exits, "Wrong username, please try again"
+    new_password = str(input("Password :\t"))
+    hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
+    my_document.document(my_name).set({
+        "password": hashed_password
+    })
+
 #main function
 def main():
     while True:
@@ -51,4 +61,5 @@ If yes press l else if press r. :\t"""))
             print("""You pressed an incorrect character.
 Please try again""")
 
+#program starts
 main()
