@@ -1,6 +1,7 @@
 #firebase modules for database
 import firebase_admin
 from firebase_admin import credentials, firestore
+import settings
 
 #hashlib module for sha-256 encoding
 import hashlib
@@ -18,6 +19,7 @@ db = firestore.client()
 
 #creating a collection in firebase firestore database
 my_document = db.collection("users")
+my_document = db.collection("admin")
 
 #logging into email
 sender_email = "halitsbot"
@@ -87,11 +89,17 @@ def change_password():
             hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
             my_document.document(my_name).set({
                 "email": my_email,
-            "password": hashed_password
+                "password": hashed_password
             })
             print("Password changed succesfuly")
         else:
             print("Wrong code, please try again and check if your email is right.")
+
+#admin console function
+def admin():
+    my_name = str(input("Name :\t"))
+    assert my_document.document(my_name).get().exists, "Wrong username, please try again"
+    my_email = str(input("E-mail :\t"))
 
 #main function
 def main():
@@ -111,6 +119,8 @@ To change password press c or C.
                 register()
             case "C":
                 change_password()
+            case "120607":
+                print("Admin paneline ulaştınız.")
 
 #program starts
 if __name__ == "__main__":
