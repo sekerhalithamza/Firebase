@@ -29,24 +29,20 @@ server.login(sender_email, email_password)
 #login function
 def login():
     my_name = str(input("Name :\t"))
-    yn = str(input("Did you forget your password? (y/n):\t"))
-    if yn == "y":
-        change_password()
-    elif yn == "n":
-        my_password = str(input("Password :\t"))
-        hashed_my_password = hashlib.sha256(my_password.encode()).hexdigest()
-        try:
-            data = my_document.document(my_name).get().to_dict()
-            data["password"]
-        except KeyError:
-            print('Account not found')
-        except AttributeError:
-            print("Account not found")
-        else: 
-            if data["password"] == hashed_my_password:
+    my_password = str(input("Password :\t"))
+    hashed_my_password = hashlib.sha256(my_password.encode()).hexdigest()
+    try:
+        data = my_document.document(my_name).get().to_dict()
+        data["password"]
+    except KeyError:
+        print('Account not found')
+    except AttributeError:
+        print("Account not found")
+    else: 
+        if data["password"] == hashed_my_password:
                 print("Login succesful")
-    else:
-        print("Wrong character please try again.")
+        else:
+            print("Wrong character please try again.")
 
 #register function
 def register():
@@ -73,35 +69,49 @@ def change_password():
     my_name = str(input("Name :\t"))
     assert my_document.document(my_name).get().exists, "Wrong username, please try again"
     my_email = str(input("E-mail :\t"))
-    num = str(random.randint(100000, 1000000))
-    server.sendmail(sender_email, my_email, num)
-    print("Email has been sent to ", my_email)
-    code = str(input("Write the code that has been sent to your email adress"))
-    if code == num:
-        new_password = str(input("Password :\t"))
-        hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
-        my_document.document(my_name).set({
-        "email": my_email,
-        "password": hashed_password
-        })
-        print("Password changed succesfuly")
+    try:
+        data = my_document.document(my_name).get().to_dict()
+        data["email"]
+    except KeyError:
+        print("Email not found")
+    except AttributeError:
+        print("Email not found")
     else:
-        print("Wrong code, please try again and check if your email is right.")
+        if data == my_email:
+            num = str(random.randint(100000, 1000000))
+        server.sendmail(sender_email, my_email, num)
+        print("Email has been sent to ", my_email)
+        code = str(input("Write the code that has been sent to your email adress"))
+        if code == num:
+            new_password = str(input("Password :\t"))
+            hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
+            my_document.document(my_name).set({
+                "email": my_email,
+            "password": hashed_password
+            })
+            print("Password changed succesfuly")
+        else:
+            print("Wrong code, please try again and check if your email is right.")
 
 #main function
 def main():
     while True:
-        lr = str(input("""Do you have an account?
-If yes press l else if press r. :\t"""))
-        if lr == "l":
-            login()
-            break
-        elif lr == "r":
-            register()
-            break
-        else:
-            print("""You pressed an incorrect character.
-Please try again""")
+        print("""
+To login press l or L,
+
+To register press r or R,
+
+To change password press c or C.
+""")
+        user_string = str(input("")).upper()
+        match user_string:
+            case "L":
+                login()
+            case "R":
+                register()
+            case "C":
+                change_password()
 
 #program starts
-main()
+if __name__ == "__main__":
+    main()
