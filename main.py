@@ -231,3 +231,5 @@ To log out press b or B.
 #program starts
 if __name__ == "__main__":
     main()
+
+#TODO: Add a online/offline statu
