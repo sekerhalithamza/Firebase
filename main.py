@@ -151,6 +151,32 @@ def add_admin():
     else:
         print("Wrong code, please try again and check if your email is right.")
 
+#
+def add_user():
+    new_name = str(input("Name :\t"))
+    assert not user_document.document(new_name).get().exists, "This username is already taken, please choose another one."
+    new_password = str(input("Password :\t"))
+    hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
+    new_email = str(input("E-mail :\t"))
+    num = str(random.randint(100000, 1000000))
+    server.sendmail(sender_email, new_email, num)
+    print("Email has been sent to ", new_email)
+    code = str(input("Write the code that has been sent to your email adress\t"))
+    if code == num:
+        user_document.document(new_name).set({
+            "email": new_email,
+            "password": hashed_password
+        })
+        print("Register succesful")
+    else:
+        print("Wrong code, please try again and check if your email is right.")
+
+#
+def delete_user():
+    my_name = str(input("Name :\t"))
+    assert user_document.document(my_name).get().exists, "There is not such an user name, please try again"
+    user_document.document(my_name).delete()
+    print("User deleted succesfuly")
 
 #deletin an admin from firebase database function
 def delete_admin():
@@ -191,8 +217,10 @@ To log out press 7.
                 print("Directing...")
             case "4":
                 print("Directing...")
+                add_user()
             case "5":
                 print("Directing...")
+                delete_user()
             case "6":
                 print("Directing...")
             case "7":
