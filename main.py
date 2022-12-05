@@ -151,7 +151,7 @@ def add_admin():
     else:
         print("Wrong code, please try again and check if your email is right.")
 
-#
+#adding a new user to firebase database function
 def add_user():
     new_name = str(input("Name :\t"))
     assert not user_document.document(new_name).get().exists, "This username is already taken, please choose another one."
@@ -171,20 +171,83 @@ def add_user():
     else:
         print("Wrong code, please try again and check if your email is right.")
 
-#
+#deleting a user from firebase database function
 def delete_user():
     my_name = str(input("Name :\t"))
     assert user_document.document(my_name).get().exists, "There is not such an user name, please try again"
     user_document.document(my_name).delete()
     print("User deleted succesfuly")
 
-#deletin an admin from firebase database function
+#deleting an admin from firebase database function
 def delete_admin():
     my_name = str(input("Name :\t"))
     assert admin_document.document(my_name).get().exists, "There is not such an admin name, please try again"
     admin_document.document(my_name).delete()
     print("Admin deleted succesfuly")
 
+#changing an admin's credentials from firebase database function
+def change_admin_credentials():
+    cred = str(input("""Do you want to change email or password
+For email press e,
+For password press p,
+"""))
+    match cred:
+        case "e":
+            print("Directing")
+            change_admin_email()
+        case "p":
+            print("Directing")
+            change_admin_password()
+
+#changing an user's credentials from firebase database function
+def change_user_credentials():
+    cred = str(input("""Do you want to change email or password
+For email press e,
+For password press p,
+"""))
+    match cred:
+        case "e":
+            print("Directing")
+            change_user_email()
+        case "p":
+            print("Directing")
+            change_user_password()
+
+#changing an admin's email from firebase database function
+def change_admin_email():
+    my_name = str(input("Name :\t"))
+    assert admin_document.document(my_name).get().exists, "There is not such an admin name, please try again"
+    new_email = str(input("New email :\t"))
+    admin_document.document(my_name).set({
+        "email": new_email
+    })
+
+#changing an admin's password from firebase database function
+def change_admin_password():
+    my_name = str(input("Name :\t"))
+    assert admin_document.document(my_name).get().exists, "There is not such an admin name, please try again"
+    new_password = str(input("New password :\t"))
+    admin_document.document(my_name).set({
+        "password": new_password
+    })
+
+#changing an user's email from firebase database functiın
+def change_user_email():
+    my_name = str(input("Name :\t"))
+    assert user_document.document(my_name).get().exists, "There is not such an user name, please try again"
+    new_email = str(input("New email :\t"))
+    user_document.document(my_name).set({
+        "email": new_email
+    })
+
+#changing an user's password from firebase database function
+def change_user_password():
+    my_name = str(input("Name :\t"))
+    assert user_document.document(my_name).get().exists, "There is not such an admin name, please try again"
+    new_password = str(input("New password :\t"))
+    user_document.document(my_name).set({
+        "password": new_password
+    })
 
 #admin console function
 def admin_console():
@@ -215,6 +278,7 @@ To log out press 7.
                 delete_admin()
             case "3":
                 print("Directing...")
+                change_admin_credentials()
             case "4":
                 print("Directing...")
                 add_user()
@@ -223,6 +287,7 @@ To log out press 7.
                 delete_user()
             case "6":
                 print("Directing...")
+                change_user_credentials()
             case "7":
                 print("Logging out")
                 break
@@ -247,7 +312,7 @@ To log out press b or B.
                 register()
             case "C":
                 change_password()
-            case "120607":
+            case "1929":
                 print("You reached to admin panel.")
                 print("Please log in.")
                 admin_login()
