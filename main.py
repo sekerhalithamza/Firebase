@@ -285,7 +285,6 @@ To change an users password or email press 6,
 
 To log out press 7.
 """)
-#TODO: Complete the admin console
         admin_string = str(input(""))
         match admin_string:
             case "1":
@@ -344,4 +343,4 @@ To log out press b or B.
 if __name__ == "__main__":
     main()
 
-#TODO: Add a online/offline statu
+#TODO: add tests
