@@ -83,8 +83,6 @@ def register():
 
 #change password function
 def change_password():
-    my_name = str(input("Name :\t"))
-    assert user_document.document(my_name).get().exists, "Wrong username, please try again"
     my_email = str(input("E-mail :\t"))
     try:
         data = user_document.document(my_name).get().to_dict()
@@ -100,11 +98,12 @@ def change_password():
             print("Email has been sent to ", my_email)
             code = str(input("Write the code that has been sent to your email adress"))
             if code == num:
-                new_password = str(input("Password :\t"))
+                new_password = str(input("New password :\t"))
                 hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
                 user_document.document(my_name).set({
                     "email": my_email,
-                    "password": hashed_password
+                    "password": hashed_password,
+                    ""
                 })
                 print("Password changed succesfuly")
             else:
