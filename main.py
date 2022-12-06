@@ -29,6 +29,8 @@ server.login(sender_email, email_password)
 
 #login function
 def login():
+    global my_name
+    global data
     my_name = str(input("Name :\t"))
     assert user_document.document(my_name).get().exists, "Wrong username, please try again."
     my_password = str(input("Password :\t"))
@@ -44,15 +46,19 @@ def login():
         if data["password"] == hashed_my_password:
                 print("Login succesful")
                 user_document.document(my_name).set({
-                    "status": "online"
+                    "status": "online",
+                    "email": data["email"],
+                    "password": data["password"]
                 })
         else:
             print("Wrong character please try again.")
 
 #log out function
-def log_out(my_name):
+def log_out():
     user_document.document(my_name).set({
-        "status": "offline"
+        "status": "offline",
+        "email": data["email"],
+        "password": data["password"]
     })
 
 #register function
@@ -331,6 +337,7 @@ To log out press b or B.
                 break
             case "B":
                 print("Logging out")
+                log_out()
                 break
 
 #program starts
