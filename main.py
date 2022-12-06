@@ -30,7 +30,7 @@ server.login(sender_email, email_password)
 #login function
 def login():
     global my_name
-    global data
+    global data 
     my_name = str(input("Name :\t"))
     assert user_document.document(my_name).get().exists, "Wrong username, please try again."
     my_password = str(input("Password :\t"))
