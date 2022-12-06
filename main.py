@@ -51,7 +51,7 @@ def login():
                     "password": data["password"]
                 })
         else:
-            print("Wrong character please try again.")
+            print("Wrong password please try again.")
 
 #log out function
 def log_out():
@@ -103,13 +103,28 @@ def change_password():
                 user_document.document(my_name).set({
                     "email": my_email,
                     "password": hashed_password,
-                    ""
+                    "status": "online"
                 })
                 print("Password changed succesfuly")
             else:
                 print("Wrong code, please try again and check if your email is right.")
         else:
             print("Wrong Email")
+
+def user_console():
+    print("""
+To change password press c or C,
+
+To log out press b or B
+""")
+    user_string = str(input("")).upper()
+    match user_string:
+        case "C":
+            print("Directing")
+            change_password()
+        case "B":
+            print("Directing")
+            log_out()
 
 ###############################################################################################################################################
 ###################################################### ADMIN PART #############################################################################
@@ -316,9 +331,7 @@ To login press l or L,
 
 To register press r or R,
 
-To change password press c or C.
-
-To log out press b or B.
+To exit press b or B.
 """)
         user_string = str(input("")).upper()
         match user_string:
@@ -326,16 +339,13 @@ To log out press b or B.
                 login()
             case "R":
                 register()
-            case "C":
-                change_password()
             case "1929":
                 print("You reached to admin panel.")
                 print("Please log in.")
                 admin_login()
                 break
             case "B":
-                print("Logging out")
-                log_out()
+                print("Exit...")
                 break
 
 #program starts
