@@ -43,8 +43,17 @@ def login():
     else: 
         if data["password"] == hashed_my_password:
                 print("Login succesful")
+                user_document.document(my_name).set({
+                    "status": "online"
+                })
         else:
             print("Wrong character please try again.")
+
+#log out function
+def log_out(my_name):
+    user_document.document(my_name).set({
+        "status": "offline"
+    })
 
 #register function
 def register():
@@ -123,6 +132,9 @@ def admin_login():
                 code = str(input("Write the code that has been sent to your email adress"))
                 if code == num:
                     print("Login succesful")
+                    admin_document.document(my_name).set({
+                        "status": "online"
+                    })
                     admin_console()
                 else:
                     print("Wrong code, please try again and check if your email is right.")
