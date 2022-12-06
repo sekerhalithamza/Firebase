@@ -351,5 +351,3 @@ To exit press b or B.
 #program starts
 if __name__ == "__main__":
     main()
-
-#TODO: add tests
