@@ -50,11 +50,13 @@ def login():
                     "email": data["email"],
                     "password": data["password"]
                 })
+                user_console()
         else:
             print("Wrong password please try again.")
 
 #log out function
 def log_out():
+    print("Logging out")
     user_document.document(my_name).set({
         "status": "offline",
         "email": data["email"],
@@ -106,6 +108,7 @@ def change_password():
                     "status": "online"
                 })
                 print("Password changed succesfuly")
+                user_console()
             else:
                 print("Wrong code, please try again and check if your email is right.")
         else:
@@ -117,14 +120,15 @@ To change password press c or C,
 
 To log out press b or B
 """)
-    user_string = str(input("")).upper()
-    match user_string:
-        case "C":
-            print("Directing")
-            change_password()
-        case "B":
-            print("Directing")
-            log_out()
+    while True:
+        user_string = str(input("")).upper()
+        match user_string:
+            case "C":
+                print("Directing")
+                change_password()
+            case "B":
+                log_out()
+                break
 
 ###############################################################################################################################################
 ###################################################### ADMIN PART #############################################################################
@@ -260,7 +264,7 @@ def change_admin_password():
     assert admin_document.document(my_name).get().exists, "There is not such an admin name, please try again"
     new_password = str(input("New password :\t"))
     admin_document.document(my_name).set({
-        "password": new_password
+        "password": new_password,
     })
 
 #changing an user's email from firebase database functiın
