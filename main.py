@@ -130,10 +130,6 @@ To log out press b or B
                 log_out()
                 break
 
-###############################################################################################################################################
-###################################################### ADMIN PART #############################################################################
-###############################################################################################################################################
-
 #admin console function
 def admin_login():
     my_name = str(input("Name :\t"))
@@ -156,9 +152,6 @@ def admin_login():
                 code = str(input("Write the code that has been sent to your email adress"))
                 if code == num:
                     print("Login succesful")
-                    admin_document.document(my_name).set({
-                        "status": "online"
-                    })
                     admin_console()
                 else:
                     print("Wrong code, please try again and check if your email is right.")
@@ -261,10 +254,12 @@ def change_admin_email():
 #changing an admin's password from firebase database function
 def change_admin_password():
     my_name = str(input("Name :\t"))
+    new_data = admin_document.document(my_name).get().to_dict()
     assert admin_document.document(my_name).get().exists, "There is not such an admin name, please try again"
     new_password = str(input("New password :\t"))
+    hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
     admin_document.document(my_name).set({
-        "password": new_password,
+        "password": hashed_password,
     })
 
 #changing an user's email from firebase database functiın
