@@ -21,7 +21,7 @@ user_document = db.collection("users")
 admin_document = db.collection("admin")
 
 #logging into email
-sender_email = "halitsbot"
+sender_email = "halitsbot@gmail.com"
 email_password = "rbflhssxgdwsbgkg"
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
