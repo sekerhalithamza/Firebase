@@ -115,11 +115,7 @@ def change_password():
             print("Wrong Email")
 
 def user_console():
-    print("""
-To change password press c or C,
-
-To log out press b or B
-""")
+    print("To change password press c or C,\nTo log out press b or B")
     while True:
         user_string = str(input("")).upper()
         match user_string:
