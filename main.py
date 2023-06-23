@@ -37,9 +37,9 @@ class User:
         )
         user_string = input("Enter your choice:\t")
         if user_string == "1":
-            return
+            self.change_password()
         elif user_string == "2":
-            return
+            self.change_email()
         elif user_string == "3":
             return
         elif user_string == "4":
@@ -92,7 +92,7 @@ class User:
         users.document(user_name).update({"status": "offline"})
         print("Logout successful")
 
-    def change_password():
+    def change_password(self):
         user_password = str(input("Enter your password:\t"))
         user_password = hashlib.sha256(user_password.encode()).hexdigest()
         if user_password == data["password"]:
@@ -102,10 +102,24 @@ class User:
                 new_password = hashlib.sha256(new_password.encode()).hexdigest()
                 users.document(user_name).update({"password": new_password})
                 print("Password change succesfully")
+                self.user_panel()
             else:
                 print("Passwords does not match.")
+                self.change_password()
         else:
             print("Wrong password")
+            self.login()
+
+    def change_email(self):
+        user_password = str(input("Enter your password:\t"))
+        user_password = hashlib.sha256(user_password.encode()).hexdigest()
+        if user_password == data["password"]:
+            new_email = str(input("Enter your new email:\t"))
+            users.document(user_name).update({"email": new_email})
+            print("Email change successfully")
+        else:
+            print("Wrong password.")
+            self.login()
 
 
 class Admin:
