@@ -47,22 +47,12 @@ class User:
 
     def login(self):
         global user_name
+        global data
         user_name = input("Enter your username:\t")
         if users.document(user_name).get().exists == False:
             print("User could not found")
             user_name = None
             self.register()
-        # try:
-        #     data = users.document(user_name).get().to_dict()
-        #     data["email"]
-        #     data["password"]
-        # except KeyError:
-        #     print("User not found")
-        #     # main()
-        # except AttributeError:
-        #     print("User not found")
-        #     # main()
-        # else:
         data = users.document(user_name).get().to_dict()
         user_email = input("Enter your email:\t")
         if user_email == data["email"]:
@@ -101,6 +91,21 @@ class User:
     def logout():
         users.document(user_name).update({"status": "offline"})
         print("Logout successful")
+
+    def change_password():
+        user_password = str(input("Enter your password:\t"))
+        user_password = hashlib.sha256(user_password.encode()).hexdigest()
+        if user_password == data["password"]:
+            new_password = str(input("Enter your new password:\t"))
+            password_confirm = str(input("Enter your new password again:\t"))
+            if new_password == password_confirm:
+                new_password = hashlib.sha256(new_password.encode()).hexdigest()
+                users.document(user_name).update({"password": new_password})
+                print("Password change succesfully")
+            else:
+                print("Passwords does not match.")
+        else:
+            print("Wrong password")
 
 
 class Admin:
