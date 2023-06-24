@@ -32,7 +32,6 @@ class User:
             Welcome {user_name}
             To change your password press 1
             To change your email press 2
-            To change your username press 3
             To logout press 4"""
         )
         user_string = input("Enter your choice:\t")
@@ -40,10 +39,8 @@ class User:
             self.change_password()
         elif user_string == "2":
             self.change_email()
-        elif user_string == "3":
-            return
         elif user_string == "4":
-            return
+            self.logout()
 
     def login(self):
         global user_name
